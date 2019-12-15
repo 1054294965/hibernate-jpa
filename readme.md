@@ -3,5 +3,5 @@
 localhost创建数据库  
 CREATE DATABASE `hibernate_jpa` /*!40100 DEFAULT CHARACTER SET utf8 */
 
-例子来源于hibernate官网:
+例子来源于hibernate官网:  
 https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html
