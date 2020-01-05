@@ -1,12 +1,16 @@
 package com.example.accessingdatamysql.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.Data;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+@Data
 @Entity(name = "Address")
-public class Address {
+public class Address implements Serializable {
 
     @Id
     @GeneratedValue
@@ -17,35 +21,38 @@ public class Address {
     @Column(name = "`number`")
     private String number;
 
-    //Getters and setters are omitted for brevity
+    private String postalCode;
 
+    @OneToMany(
+            mappedBy = "address",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<PersonAddress> owners = new ArrayList<>();
 
-    public Address(String street, String number) {
-        this.street = street;
-        this.number = number;
+    public Address(){}
+    public Address(String street,String number,String postalCode){
+        this.street=street;
+        this.number=number;
+        this.postalCode=postalCode;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if ( this == o ) {
+            return true;
+        }
+        if ( o == null || getClass() != o.getClass() ) {
+            return false;
+        }
+        Address address = (Address) o;
+        return Objects.equals( street, address.street ) &&
+                Objects.equals( number, address.number ) &&
+                Objects.equals( postalCode, address.postalCode );
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
+    @Override
+    public int hashCode() {
+        return Objects.hash( street, number, postalCode );
     }
 }
