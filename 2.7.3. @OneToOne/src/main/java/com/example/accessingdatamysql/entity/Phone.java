@@ -1,7 +1,9 @@
 package com.example.accessingdatamysql.entity;
 
-import javax.persistence.*;
+import lombok.Data;
 
+import javax.persistence.*;
+@Data
 @Entity(name = "Phone")
 public class Phone {
 
@@ -19,7 +21,9 @@ public class Phone {
             fetch = FetchType.LAZY
     )
     private PhoneDetails details;
+    public Phone(){
 
+    }
     public Phone(String number) {
         this.number = number;
     }
@@ -37,28 +41,6 @@ public class Phone {
         }
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public PhoneDetails getDetails() {
-        return details;
-    }
-
-    public void setDetails(PhoneDetails details) {
-        this.details = details;
-    }
 }
 
