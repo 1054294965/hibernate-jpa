@@ -1,7 +1,9 @@
 package com.example.accessingdatamysql.entity;
 
-import javax.persistence.*;
+import lombok.Data;
 
+import javax.persistence.*;
+@Data
 @Entity(name = "Phone")
 public class Phone {
 
@@ -12,39 +14,18 @@ public class Phone {
     @Column(name = "`number`")
     private String number;
 
-    @ManyToOne
-    @JoinColumn(name = "person_id",
-            foreignKey = @ForeignKey(name = "PERSON_ID_FK")
+    @ManyToOne(
+
+    )
+    @JoinColumn(name = "person_id"
+
     )
     private Person person;
 
-    //Getters and setters are omitted for brevity
-
-    public Phone(String number) {
-        this.number = number;
+    public Phone(){}
+    public Phone(String number){
+        this.number=number;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 }

@@ -1,9 +1,11 @@
 package com.example.accessingdatamysql.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.Data;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Data
 @Entity(name = "Person")
 public class Person {
 
@@ -11,13 +13,27 @@ public class Person {
     @GeneratedValue
     private Long id;
 
-    //Getters and setters are omitted for brevity
+    private String name;
+    @OneToMany(
+            mappedBy = "person",
+            cascade= CascadeType.ALL,
+            fetch= FetchType.LAZY,
+            orphanRemoval = true
+    )
+    private List<Phone> phoneList;
 
-    public Long getId() {
-        return id;
+    public Person(){}
+    public Person(String name){
+        this.name=name;
+    }
+    public  void addPhone(Phone phone){
+        phone.setPerson(this);
+        phoneList.add(phone);
+    }
+    public  void removePhone(Phone phone){
+        phone.setPerson(this);
+        phoneList.remove(phone);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 }
