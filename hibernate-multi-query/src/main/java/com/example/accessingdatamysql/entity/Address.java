@@ -1,5 +1,6 @@
 package com.example.accessingdatamysql.entity;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,12 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
-@Entity(name = "Address")
-public class Address implements Serializable {
+@Entity
+public class Address extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue
-    private Long id;
 
     private String street;
 
@@ -28,7 +26,7 @@ public class Address implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<PersonAddress> owners = new ArrayList<>();
+    private List<UserAddress> users = new ArrayList<>();
 
     public Address(){}
     public Address(String street,String number,String postalCode){
@@ -37,22 +35,5 @@ public class Address implements Serializable {
         this.postalCode=postalCode;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if ( this == o ) {
-            return true;
-        }
-        if ( o == null || getClass() != o.getClass() ) {
-            return false;
-        }
-        Address address = (Address) o;
-        return Objects.equals( street, address.street ) &&
-                Objects.equals( number, address.number ) &&
-                Objects.equals( postalCode, address.postalCode );
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash( street, number, postalCode );
-    }
 }
